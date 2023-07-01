@@ -8,12 +8,11 @@ This Python script is designed to get measurements from a Keyence LK-G5000 Laser
 Before running this script, please make sure that the following Python libraries are installed:
 
 - `cpppo`
-- `loguru`
 
 You can install them using pip:
 
 ```sh
-pip install cpppo loguru
+pip install cpppo
 ```
 
 ## How to Use

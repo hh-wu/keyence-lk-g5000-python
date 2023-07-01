@@ -2,7 +2,6 @@ import time
 
 from cpppo.server import enip
 from cpppo.server.enip import client
-from loguru import logger
 
 
 def get_lk_g5000_measurement(
@@ -16,16 +15,16 @@ def get_lk_g5000_measurement(
             data=[ord(c) for c in 'MS,01']  # 这个指令详见rs232串口说明书
         )
         if debug:
-            logger.debug(f'req={enip.enip_format(req)}')
+            print(f'req={enip.enip_format(req)}')
         assert connection.readable(timeout=10.0)  # receive reply
         rpy = next(connection)
         if debug:
-            logger.debug(f'data={enip.enip_format(rpy)}')
+            print(f'data={enip.enip_format(rpy)}')
         data = rpy.enip.CIP.send_data.CPF.item[
             1].connection_data.request.service_code.data
         z = float(''.join([chr(x) for x in data[6:6 + 8]]), )
         if debug:
-            logger.debug(f'Z={z}mm')
+            print(f'Z={z}mm')
     return z
 
 
@@ -34,9 +33,8 @@ def init_lk_g5000_connection(host):
 
 
 if __name__ == '__main__':
-    # z = get_measurement(debug=True)
     host = '192.168.6.2'
     conn = init_lk_g5000_connection(host=host)
     for i in range(10):
-        logger.info(get_lk_g5000_measurement(conn))
+        print(get_lk_g5000_measurement(conn, debug=True))
         time.sleep(0.01)
