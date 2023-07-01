@@ -12,7 +12,7 @@ def get_lk_g5000_measurement(
         req = connection.service_code(
             code=0x4b,
             path=f'@0x71/0x01/0x00',  # path=@class/instance/attribute
-            data=[ord(c) for c in 'MS,01']  # 这个指令详见rs232串口说明书
+            data=[ord(c) for c in 'MS,01'] + [0]  # 这个指令详见rs232串口说明书
         )
         if debug:
             print(f'req={enip.enip_format(req)}')
